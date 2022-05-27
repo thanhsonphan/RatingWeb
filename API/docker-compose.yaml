@@ -7,9 +7,6 @@ services:
    ports:
    - 80:80
    - 443:443
-#   volumes:
-#   - ./nginx/conf.d:/etc/nginx/conf.d
-#   -
    depends_on:
    - rate-web
 
@@ -23,7 +20,7 @@ services:
     environment:
       POSTGRES_PASSWORD: rate123
       POSTGRES_USER: ratingsystem
-      POSTGRES_DB: postgres-full
+      POSTGRES_DB: postgres
 
 
   rate-web:

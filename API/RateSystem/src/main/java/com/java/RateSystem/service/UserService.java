@@ -1,7 +1,7 @@
-package com.java.RateSystem.controller.service;
+package com.java.RateSystem.service;
 
 import com.java.RateSystem.models.User;
-import com.java.RateSystem.controller.service.repository.UserRepository;
+import com.java.RateSystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

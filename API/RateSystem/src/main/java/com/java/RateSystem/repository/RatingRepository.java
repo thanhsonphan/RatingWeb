@@ -1,4 +1,4 @@
-package com.java.RateSystem.controller.service.repository;
+package com.java.RateSystem.repository;
 
 import com.java.RateSystem.models.Rating;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,8 +1,8 @@
 package com.java.RateSystem.controller;
 
-import com.java.RateSystem.controller.service.repository.ServiceRepository;
 import com.java.RateSystem.models.ResponseObject;
 import com.java.RateSystem.models.Servicerate;
+import com.java.RateSystem.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

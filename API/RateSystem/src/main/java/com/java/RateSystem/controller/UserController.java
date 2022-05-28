@@ -2,6 +2,7 @@ package com.java.RateSystem.controller;
 
 import com.java.RateSystem.models.ResponseObject;
 import com.java.RateSystem.models.User;
+import com.java.RateSystem.repository.UserRepository;
 import com.java.RateSystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,16 +38,16 @@ public class UserController {
     @PostMapping("/register")
     public String register(@ModelAttribute User user){
         System.out.println("register request: " + user);
-        User registerUser = userService.registerUser(user.getUserName(), user.getPassword(), user.getEmail(), user.getRole());
+        User registerUser = userService.registerUser(user.getName(), user.getPassword(), user.getEmail(), user.getRole());
         return registerUser == null ? "error_page" : "redirect:/login";
     }
 
     @PostMapping("/login")
     public String login(@ModelAttribute User user, Model model){
         System.out.println("login request: " + user);
-        User authenticated = userService.authenticate(user.getUserName(), user.getPassword());
+        User authenticated = userService.authenticate(user.getName(), user.getPassword());
         if(authenticated != null){
-            model.addAttribute("userName", authenticated.getUserName());
+            model.addAttribute("userName", authenticated.getName());
             return "personal_page";
         }else {
             return "error_page";
@@ -55,65 +56,65 @@ public class UserController {
 
 
 
-//    //Call API
-//    @Autowired
-//    private UserRepository userRepository;
-//    @GetMapping("")
-//    List<User> getAllUserName(){return userRepository.findAll();}
-//
-//    @GetMapping("/{id}")
-//    ResponseEntity<ResponseObject>findByUserId(@PathVariable Integer id){
-//        Optional<User> foundUser = userRepository.findById(id);
-//        return foundUser.isPresent() ?
-//                ResponseEntity.status(HttpStatus.OK).body(
-//                        new ResponseObject("ok","Querry product successfully", foundUser)
-//                ):
-//                ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-//                        new ResponseObject("False","Cannot find", foundUser)
-//                );
-//    }
-//
-//    @PostMapping("/insert")
-//    ResponseEntity<ResponseObject> insertUser(@RequestBody User newUser){
-//        Optional<User> foundUser = userRepository.findByEmail(newUser.getEmail().trim());
-//        return foundUser.isPresent() ?
-//                ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-//                        new ResponseObject("failed", "Email already taken", "")
-//                ):
-//                ResponseEntity.status(HttpStatus.OK).body(
-//                        new ResponseObject("Ok","Register User Name successfully",userRepository.save(newUser))
-//                );
-//    }
-//
-//    @PutMapping("/{id}")
-//    ResponseEntity<ResponseObject> updateUser (@RequestBody User newUser, @PathVariable Integer id){
-//        User updateUser =  userRepository.findById(id)
-//                .map(user -> {
-//                    user.setUserName(newUser.getUserName());
-//                    user.setEmail(newUser.getEmail());
-//                    user.setRole(newUser.getRole());
-//                    return userRepository.save(user);
-//                }).orElseGet(()->{
-//                    newUser.setUserId(id);
-//                    return userRepository.save(newUser);
-//                });
-//        return ResponseEntity.status(HttpStatus.OK).body(
-//                new ResponseObject("Ok","Update User successfully",userRepository.save(newUser))
-//        );
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    ResponseEntity<ResponseObject> deleteUser (@PathVariable Integer id){
-//        boolean exists = userRepository.existsById(id);
-//        if(exists)
-//        {
-//            userRepository.deleteById(id);
-//            return ResponseEntity.status(HttpStatus.OK).body(
-//                    new ResponseObject("Ok", "Delete User successfully","")
-//            );
-//        }
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-//                new ResponseObject("Failed", "Cannot find User to delete ", "")
-//        );
-//    }
+    //Call API
+    @Autowired
+    private UserRepository userRepository;
+    @GetMapping("")
+    List<User> getAllUserName(){return userRepository.findAll();}
+
+    @GetMapping("/{id}")
+    ResponseEntity<ResponseObject>findByUserId(@PathVariable Integer id){
+        Optional<User> foundUser = userRepository.findById(id);
+        return foundUser.isPresent() ?
+                ResponseEntity.status(HttpStatus.OK).body(
+                        new ResponseObject("ok","Querry product successfully", foundUser)
+                ):
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                        new ResponseObject("False","Cannot find", foundUser)
+                );
+    }
+
+    @PostMapping("/insert")
+    ResponseEntity<ResponseObject> insertUser(@RequestBody User newUser){
+        Optional<User> foundUser = userRepository.findByEmail(newUser.getEmail().trim());
+        return foundUser.isPresent() ?
+                ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+                        new ResponseObject("failed", "Email already taken", "")
+                ):
+                ResponseEntity.status(HttpStatus.OK).body(
+                        new ResponseObject("Ok","Register User Name successfully",userRepository.save(newUser))
+                );
+    }
+
+    @PutMapping("/{id}")
+    ResponseEntity<ResponseObject> updateUser (@RequestBody User newUser, @PathVariable Integer id){
+        User updateUser =  userRepository.findById(id)
+                .map(user -> {
+                    user.setName(newUser.getName());
+                    user.setEmail(newUser.getEmail());
+                    user.setRole(newUser.getRole());
+                    return userRepository.save(user);
+                }).orElseGet(()->{
+                    newUser.setId(id);
+                    return userRepository.save(newUser);
+                });
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("Ok","Update User successfully",userRepository.save(newUser))
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<ResponseObject> deleteUser (@PathVariable Integer id){
+        boolean exists = userRepository.existsById(id);
+        if(exists)
+        {
+            userRepository.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("Ok", "Delete User successfully","")
+            );
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ResponseObject("Failed", "Cannot find User to delete ", "")
+        );
+    }
 }

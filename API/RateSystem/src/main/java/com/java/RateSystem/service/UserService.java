@@ -20,7 +20,7 @@ public class UserService {
             return null;
         }else {
             User user = new User();
-            user.setUserName(username);
+            user.setName(username);
             user.setPassword(password);
             user.setEmail(email);
             user.setRole(role);

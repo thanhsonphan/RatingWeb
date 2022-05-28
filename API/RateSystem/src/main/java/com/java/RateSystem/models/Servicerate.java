@@ -9,69 +9,69 @@ public class Servicerate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private Integer ServiceId;
-    private String ServiceName;
-    private String Image;
-    private String Description;
-    private Integer PointAvg;
+    private Integer id;
+    private String name;
+    private String serviceimg;
+    private String servicedesc;
+    private Integer avgscore;
 
     public Servicerate() {
     }
 
-    public Servicerate(String serviceName, String image, String description, Integer pointAvg) {
-        ServiceName = serviceName;
-        Image = image;
-        Description = description;
-        PointAvg = pointAvg;
+    public Servicerate(String name, String serviceimg, String servicedesc, Integer avgscore) {
+        this.name = name;
+        this.serviceimg = serviceimg;
+        this.servicedesc = servicedesc;
+        this.avgscore = avgscore;
     }
 
-    public Integer getPointAvg() {
-        return PointAvg;
+    public Integer getId() {
+        return id;
     }
 
-    public void setPointAvg(Integer pointAvg) {
-        PointAvg = pointAvg;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getServiceId() {
-        return ServiceId;
+    public String getName() {
+        return name;
     }
 
-    public void setServiceId(Integer serviceId) {
-        ServiceId = serviceId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getServiceName() {
-        return ServiceName;
+    public String getServiceimg() {
+        return serviceimg;
     }
 
-    public void setServiceName(String serviceName) {
-        ServiceName = serviceName;
+    public void setServiceimg(String serviceimg) {
+        this.serviceimg = serviceimg;
     }
 
-    public String getImage() {
-        return Image;
+    public String getServicedesc() {
+        return servicedesc;
     }
 
-    public void setImage(String image) {
-        Image = image;
+    public void setServicedesc(String servicedesc) {
+        this.servicedesc = servicedesc;
     }
 
-    public String getDescription() {
-        return Description;
+    public Integer getAvgscore() {
+        return avgscore;
     }
 
-    public void setDescription(String description) {
-        Description = description;
+    public void setAvgscore(Integer avgscore) {
+        this.avgscore = avgscore;
     }
 
     @Override
     public String toString() {
         return "Servicerate{" +
-                "ServiceName='" + ServiceName + '\'' +
-                ", Image='" + Image + '\'' +
-                ", Description='" + Description + '\'' +
-                ", PointAvg=" + PointAvg +
+                "name='" + name + '\'' +
+                ", serviceimg='" + serviceimg + '\'' +
+                ", servicedesc='" + servicedesc + '\'' +
+                ", avgscore=" + avgscore +
                 '}';
     }
 }

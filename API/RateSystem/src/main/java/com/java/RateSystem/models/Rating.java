@@ -12,19 +12,19 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private UUID id;
-    private String ServiceId;
-    private String UserName;
-    private Double Point;
+    private Integer serviceid;
+    private String userName;
+    private Double point;
     private String Comment;
     private Date Date;
 
     public Rating() {
     }
 
-    public Rating(String serviceId, String userName, Double point, String comment, java.util.Date date) {
-        ServiceId = serviceId;
-        UserName = userName;
-        Point = point;
+    public Rating(Integer serviceid, String userName, Double point, String comment, java.util.Date date) {
+        this.serviceid = serviceid;
+        this.userName = userName;
+        this.point = point;
         Comment = comment;
         Date = date;
     }
@@ -37,28 +37,28 @@ public class Rating {
         this.id = id;
     }
 
-    public String getServiceId() {
-        return ServiceId;
+    public Integer getServiceid() {
+        return serviceid;
     }
 
-    public void setServiceId(String serviceId) {
-        ServiceId = serviceId;
+    public void setServiceid(Integer serviceid) {
+        this.serviceid = serviceid;
     }
 
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
     public void setUserName(String userName) {
-        UserName = userName;
+        this.userName = userName;
     }
 
     public Double getPoint() {
-        return Point;
+        return point;
     }
 
     public void setPoint(Double point) {
-        Point = point;
+        this.point = point;
     }
 
     public String getComment() {
@@ -80,9 +80,9 @@ public class Rating {
     @Override
     public String toString() {
         return "Rating{" +
-                "ServiceId='" + ServiceId + '\'' +
-                ", UserName='" + UserName + '\'' +
-                ", Point=" + Point +
+                "serviceid=" + serviceid +
+                ", userName='" + userName + '\'' +
+                ", point=" + point +
                 ", Comment='" + Comment + '\'' +
                 ", Date=" + Date +
                 '}';

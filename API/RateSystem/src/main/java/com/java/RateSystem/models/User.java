@@ -10,60 +10,54 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-    private Integer UserId;
-    private String UserName;
+    private Integer id;
+    private String name;
 
-    private String Password;
-    private String Email;
-    private String Role;
+    private String password;
+    private String email;
+    private String role;
 
     public User() {
     }
 
-    public User(String userName, String email, String role) {
-        UserName = userName;
-        Email = email;
-        Role = role;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
-    }
-
-    public Integer getUserId() {
-        return UserId;
-    }
-
-    public void setUserId(Integer userId) {
-        UserId = userId;
-    }
-
-    public String getUserName() {
-        return UserName;
-    }
-
-    public void setUserName(String userName) {
-        UserName = userName;
+        this.password = password;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public String getRole() {
-        return Role;
+        return role;
     }
 
     public void setRole(String role) {
-        Role = role;
+        this.role = role;
     }
 
     @Override
@@ -71,20 +65,21 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(UserId, user.UserId) && Objects.equals(UserName, user.UserName) && Objects.equals(Password, user.Password) && Objects.equals(Email, user.Email) && Objects.equals(Role, user.Role);
+        return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(role, user.role);
     }
+
 
     @Override
     public int hashCode() {
-        return Objects.hash(UserId, UserName, Password, Email, Role);
+        return Objects.hash(id, name, password, email, role);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "UserName='" + UserName + '\'' +
-                ", Email='" + Email + '\'' +
-                ", Role='" + Role + '\'' +
+                "Name='" + name + '\'' +
+                ", Email='" + email + '\'' +
+                ", Role='" + role + '\'' +
                 '}';
     }
 }

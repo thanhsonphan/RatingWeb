@@ -55,7 +55,7 @@ public class RatingController {
         Rating updateRate =  ratingRepository.findByUUID(id)
                 .map(rate -> {
                     rate.setUserName(newRate.getUserName());
-                    rate.setServiceId(newRate.getServiceId());
+                    rate.setServiceid(newRate.getServiceid());
                     rate.setPoint(newRate.getPoint());
                     rate.setComment(newRate.getComment());
                     rate.setDate(newRate.getDate());

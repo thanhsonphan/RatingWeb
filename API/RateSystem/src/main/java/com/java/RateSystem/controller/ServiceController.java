@@ -24,14 +24,14 @@ public class ServiceController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<ResponseObject> findById(@PathVariable Integer ServiceId){
-        Optional<Servicerate> foundProduct = serviceRepository.findById(ServiceId);
+    ResponseEntity<ResponseObject> findById(@PathVariable Integer id){
+        Optional<Servicerate> foundProduct = serviceRepository.findById(id);
         return foundProduct.isPresent() ?
                 ResponseEntity.status(HttpStatus.OK).body(
                         new ResponseObject("ok","Querry Service successfully", foundProduct)
                 ):
                 ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                        new ResponseObject("false", "Cannot find Service with id =" + ServiceId,"")
+                        new ResponseObject("false", "Cannot find Service with id =" + id,"")
                 );
 
     }
@@ -39,7 +39,7 @@ public class ServiceController {
     //insert data
     @PostMapping("/insert")
     ResponseEntity<ResponseObject> insertProduct(@RequestBody Servicerate newService){
-        Optional<Servicerate> foundService = serviceRepository.findByServiceName(newService.getServiceName().trim());
+        Optional<Servicerate> foundService = serviceRepository.findByServiceName(newService.getName().trim());
         return foundService.isPresent() ?
                 ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
                         new ResponseObject("failed", "Service Name already taken", "")
@@ -51,15 +51,15 @@ public class ServiceController {
 
     //Update data
     @PutMapping("/{id}")
-    ResponseEntity<ResponseObject> updateService(@RequestBody Servicerate newService, @PathVariable Integer ServiceId){
-        Servicerate updateService =  serviceRepository.findById(ServiceId)
+    ResponseEntity<ResponseObject> updateService(@RequestBody Servicerate newService, @PathVariable Integer id){
+        Servicerate updateService =  serviceRepository.findById(id)
                 .map(service -> {
-                    service.setServiceName(newService.getServiceName());
-                    service.setImage(newService.getImage());
-                    service.setDescription(newService.getDescription());
+                    service.setName(newService.getName());
+                    service.setServiceimg(newService.getServiceimg());
+                    service.setServicedesc(newService.getServicedesc());
                     return serviceRepository.save(service);
                 }).orElseGet(()->{
-                    newService.setServiceId(ServiceId);
+                    newService.setId(id);
                     return serviceRepository.save(newService);
                 });
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -68,11 +68,11 @@ public class ServiceController {
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<ResponseObject> deleteProduct (@PathVariable Integer ServiceId){
-        boolean exists = serviceRepository.existsById(ServiceId);
+    ResponseEntity<ResponseObject> deleteProduct (@PathVariable Integer id){
+        boolean exists = serviceRepository.existsById(id);
         if(exists)
         {
-            serviceRepository.deleteById(ServiceId);
+            serviceRepository.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("Ok", "Delete Service successfully","")
             );

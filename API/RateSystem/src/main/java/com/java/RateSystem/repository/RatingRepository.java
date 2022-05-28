@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Repository
 public interface RatingRepository extends JpaRepository<Rating, UUID> {
-    @Query("SELECT s FROM Rating s WHERE s.ServiceId = ?1")
+    @Query("SELECT s FROM Rating s WHERE s.serviceid = ?1")
     Optional<Rating> findByUUID(UUID id);
 
 }

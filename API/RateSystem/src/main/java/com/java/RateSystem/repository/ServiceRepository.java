@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface ServiceRepository extends JpaRepository<Servicerate, Integer> {
-    @Query("SELECT s FROM Servicerate s WHERE s.ServiceName = ?1")
+    @Query("SELECT s FROM Servicerate s WHERE s.name = ?1")
     Optional<Servicerate> findByServiceName(String Name);
 }

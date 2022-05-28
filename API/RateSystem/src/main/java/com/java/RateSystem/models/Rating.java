@@ -1,7 +1,6 @@
 package com.java.RateSystem.models;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
@@ -13,7 +12,7 @@ public class Rating {
 
     private UUID id;
     private Integer serviceid;
-    private String userName;
+    private String username;
     private Double point;
     private String Comment;
     private Date Date;
@@ -21,9 +20,9 @@ public class Rating {
     public Rating() {
     }
 
-    public Rating(Integer serviceid, String userName, Double point, String comment, java.util.Date date) {
+    public Rating(Integer serviceid, String username, Double point, String comment, java.util.Date date) {
         this.serviceid = serviceid;
-        this.userName = userName;
+        this.username = username;
         this.point = point;
         Comment = comment;
         Date = date;
@@ -45,12 +44,12 @@ public class Rating {
         this.serviceid = serviceid;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public Double getPoint() {
@@ -81,7 +80,7 @@ public class Rating {
     public String toString() {
         return "Rating{" +
                 "serviceid=" + serviceid +
-                ", userName='" + userName + '\'' +
+                ", userName='" + username + '\'' +
                 ", point=" + point +
                 ", Comment='" + Comment + '\'' +
                 ", Date=" + Date +

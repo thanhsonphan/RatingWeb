@@ -54,7 +54,7 @@ public class RatingController {
     ResponseEntity<ResponseObject> updateRate(@RequestBody Rating newRate, @PathVariable UUID id){
         Rating updateRate =  ratingRepository.findByUUID(id)
                 .map(rate -> {
-                    rate.setUserName(newRate.getUserName());
+                    rate.setUsername(newRate.getUsername());
                     rate.setServiceid(newRate.getServiceid());
                     rate.setPoint(newRate.getPoint());
                     rate.setComment(newRate.getComment());

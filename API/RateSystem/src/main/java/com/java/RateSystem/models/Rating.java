@@ -15,7 +15,7 @@ public class Rating {
     private String username;
     private Double point;
     private String Comment;
-    private Date Date;
+    private Date date;
 
     public Rating() {
     }
@@ -25,7 +25,7 @@ public class Rating {
         this.username = username;
         this.point = point;
         Comment = comment;
-        Date = date;
+        this.date = date;
     }
 
     public UUID getId() {
@@ -69,11 +69,11 @@ public class Rating {
     }
 
     public java.util.Date getDate() {
-        return Date;
+        return date;
     }
 
     public void setDate(java.util.Date date) {
-        Date = date;
+        this.date = date;
     }
 
     @Override
@@ -83,7 +83,7 @@ public class Rating {
                 ", userName='" + username + '\'' +
                 ", point=" + point +
                 ", Comment='" + Comment + '\'' +
-                ", Date=" + Date +
+                ", Date=" + date +
                 '}';
     }
 }

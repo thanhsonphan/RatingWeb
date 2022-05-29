@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "", allowedHeaders = "")
 @RestController
 @RequestMapping(path = "api/v1/services")
 public class ServiceController {
@@ -55,8 +56,8 @@ public class ServiceController {
         Servicerate updateService =  serviceRepository.findById(id)
                 .map(service -> {
                     service.setName(newService.getName());
-                    service.setServiceimg(newService.getServiceimg());
-                    service.setServicedesc(newService.getServicedesc());
+                    service.setImage(newService.getImage());
+                    service.setDescription(newService.getDescription());
                     return serviceRepository.save(service);
                 }).orElseGet(()->{
                     newService.setId(id);

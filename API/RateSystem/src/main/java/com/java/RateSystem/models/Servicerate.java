@@ -11,17 +11,17 @@ public class Servicerate {
 
     private Integer id;
     private String name;
-    private String serviceimg;
-    private String servicedesc;
+    private String image;
+    private String description;
     private Integer avgscore;
 
     public Servicerate() {
     }
 
-    public Servicerate(String name, String serviceimg, String servicedesc, Integer avgscore) {
+    public Servicerate(String name, String image, String description, Integer avgscore) {
         this.name = name;
-        this.serviceimg = serviceimg;
-        this.servicedesc = servicedesc;
+        this.image = image;
+        this.description = description;
         this.avgscore = avgscore;
     }
 
@@ -41,20 +41,20 @@ public class Servicerate {
         this.name = name;
     }
 
-    public String getServiceimg() {
-        return serviceimg;
+    public String getImage() {
+        return image;
     }
 
-    public void setServiceimg(String serviceimg) {
-        this.serviceimg = serviceimg;
+    public void setImage(String serviceimg) {
+        this.image = serviceimg;
     }
 
-    public String getServicedesc() {
-        return servicedesc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setServicedesc(String servicedesc) {
-        this.servicedesc = servicedesc;
+    public void setDescription(String servicedesc) {
+        this.description = servicedesc;
     }
 
     public Integer getAvgscore() {
@@ -69,8 +69,8 @@ public class Servicerate {
     public String toString() {
         return "Servicerate{" +
                 "name='" + name + '\'' +
-                ", serviceimg='" + serviceimg + '\'' +
-                ", servicedesc='" + servicedesc + '\'' +
+                ", serviceimg='" + image + '\'' +
+                ", servicedesc='" + description + '\'' +
                 ", avgscore=" + avgscore +
                 '}';
     }

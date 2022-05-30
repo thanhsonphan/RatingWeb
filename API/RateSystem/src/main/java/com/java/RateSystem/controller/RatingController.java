@@ -3,6 +3,7 @@ package com.java.RateSystem.controller;
 import com.java.RateSystem.models.Rating;
 import com.java.RateSystem.models.ResponseObject;
 import com.java.RateSystem.repository.RatingRepository;
+import com.java.RateSystem.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,20 +13,24 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@CrossOrigin(origins = "*", allowedHeaders = "")
 @RestController
 @RequestMapping(path = "api/v1/rate")
 public class RatingController {
+    @Autowired
+    private RatingService ratingService;
+
     @Autowired
     private RatingRepository ratingRepository;
 
     @GetMapping("")
     List<Rating> getAllService(){
-        return ratingRepository.findAll();
+        return ratingService.getAll();
     }
 
     @GetMapping("{id}")
     ResponseEntity<ResponseObject>findByUUId(@PathVariable UUID id){
-        Optional<Rating> foundService = ratingRepository.findById(id);
+        Optional<Rating> foundService = ratingService.findByUUId(id);
         return foundService.isPresent() ?
                 ResponseEntity.status(HttpStatus.OK).body(
                         new ResponseObject("ok","Querry Service successfully", foundService)
@@ -39,42 +44,46 @@ public class RatingController {
     //insert data
     @PostMapping("/insert")
     ResponseEntity<ResponseObject> insertRating(@RequestBody Rating newRate){
-        Optional<Rating> foundRate = ratingRepository.findByUUID(newRate.getId());
-        return foundRate.isPresent() ?
-                ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                        new ResponseObject("failed", "Service Name already taken", "")
-                ):
-                ResponseEntity.status(HttpStatus.OK).body(
-                        new ResponseObject("Ok","Insert Service successfully",ratingRepository.save(newRate))
-                );
+        Optional<Rating> foundRate = ratingService.findByUUId(newRate.getId());
+        if (foundRate.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+                    new ResponseObject("failed", "Insert Rating successfully"," ")
+            );
+        } else {
+            ratingService.saveRating(newRate);
+            ratingService.updateavg(newRate);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("Ok", "Insert Rating successfully","")
+            );
+        }
     }
 
     //Update data
     @PutMapping("/{id}")
     ResponseEntity<ResponseObject> updateRate(@RequestBody Rating newRate, @PathVariable UUID id){
-        Rating updateRate =  ratingRepository.findByUUID(id)
+        Rating updateRate =  ratingService.findByUUId(id)
                 .map(rate -> {
                     rate.setUsername(newRate.getUsername());
                     rate.setServiceid(newRate.getServiceid());
                     rate.setPoint(newRate.getPoint());
                     rate.setComment(newRate.getComment());
                     rate.setDate(newRate.getDate());
-                    return ratingRepository.save(rate);
+                    return ratingService.saveRating(rate);
                 }).orElseGet(()->{
                     newRate.setId(id);
-                    return ratingRepository.save(newRate);
+                    return ratingService.saveRating(newRate);
                 });
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("Ok","Update Service successfully",ratingRepository.save(newRate))
+                new ResponseObject("Ok","Update Service successfully",ratingService.saveRating(newRate))
         );
     }
 
     @DeleteMapping("/{id}")
     ResponseEntity<ResponseObject> deleteRate (@PathVariable UUID id){
-        boolean exists = ratingRepository.existsById(id);
+        boolean exists = ratingService.isRatingExist(id);
         if(exists)
         {
-            ratingRepository.deleteById(id);
+            ratingService.deleteRating(id);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("Ok", "Delete Service successfully","")
             );

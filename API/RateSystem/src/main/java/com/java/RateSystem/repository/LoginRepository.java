@@ -1,6 +1,6 @@
 package com.java.RateSystem.repository;
 
-import com.java.RateSystem.models.Servicerate;
+import com.java.RateSystem.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ServiceRepository extends JpaRepository<Servicerate, Integer> {
-    @Query("SELECT s FROM Servicerate s WHERE s.id = ?1")
-    Optional<Servicerate> findByServiceId(Integer id);
+public interface LoginRepository extends JpaRepository<User, Integer> {
+    @Query("SELECT s FROM User s WHERE s.password = ?1")
+    Optional<User> findByPassword (String username, String password);
 }

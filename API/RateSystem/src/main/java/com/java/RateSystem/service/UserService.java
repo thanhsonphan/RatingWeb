@@ -1,9 +1,15 @@
 package com.java.RateSystem.service;
 
+import com.java.RateSystem.models.Servicerate;
 import com.java.RateSystem.models.User;
 import com.java.RateSystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -15,20 +21,23 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User registerUser(String username, String password, String email, String role){
-        if(username != null && password != null){
-            return null;
-        }else {
-            User user = new User();
-            user.setName(username);
-            user.setPassword(password);
-            user.setEmail(email);
-            user.setRole(role);
-            return userRepository.save(user);
-        }
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
-    public User authenticate(String username, String password){
-        return userRepository.findByPassword(username,password).orElse(null);
+    public Optional<User> findByEmail(@PathVariable String email) {
+        return userRepository.findByEmail(email);
     }
+
+    public Optional<User> findById(@PathVariable Integer id) {
+        return userRepository.findById(id);
+    }
+
+    public void deleteById(@PathVariable Integer id) {userRepository.deleteById(id);}
+
+    public boolean existsById(@PathVariable Integer id) {
+        return userRepository.existsById(id);
+    }
+
+    public User save(@RequestBody User newUser) { return userRepository.save(newUser);}
 }

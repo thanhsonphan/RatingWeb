@@ -1,28 +1,43 @@
 package com.java.RateSystem.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "Services")
 public class Servicerate {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
+    @GeneratedValue(generator = "UUIDGenerator")
+    @Column(name = "uuid", updatable = false, nullable = false)
 
+    private UUID uuid;
     private Integer id;
     private String name;
     private String image;
     private String description;
-    private Integer avgscore;
+    private Double avgscore;
 
     public Servicerate() {
     }
 
-    public Servicerate(String name, String image, String description, Integer avgscore) {
+    public Servicerate(UUID uuid, String name, String image, String description, Double avgscore) {
+        this.uuid = uuid;
         this.name = name;
         this.image = image;
         this.description = description;
         this.avgscore = avgscore;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public Integer getId() {
@@ -57,11 +72,11 @@ public class Servicerate {
         this.description = servicedesc;
     }
 
-    public Integer getAvgscore() {
+    public Double getAvgscore() {
         return avgscore;
     }
 
-    public void setAvgscore(Integer avgscore) {
+    public void setAvgscore(Double avgscore) {
         this.avgscore = avgscore;
     }
 

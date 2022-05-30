@@ -14,57 +14,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
-//@RequestMapping(path = "api/v1/user")
+@CrossOrigin(origins = "*", allowedHeaders = "")
+@RestController
+@RequestMapping(path = "api/v1/user")
 public class UserController {
-// Login & Register
-    @Autowired
-    private UserService userService;
-
-    @GetMapping("/register")
-    public String getRegisterPage(Model model)
-    {
-        model.addAttribute("registerRequest", new User());
-        return "register_page" ;
-    }
-
-    @GetMapping("/login")
-    public String getLoginPage(Model model)
-    {
-        model.addAttribute("loginRequest", new User());
-        return "login_page";
-    }
-
-    @PostMapping("/register")
-    public String register(@ModelAttribute User user){
-        System.out.println("register request: " + user);
-        User registerUser = userService.registerUser(user.getName(), user.getPassword(), user.getEmail(), user.getRole());
-        return registerUser == null ? "error_page" : "redirect:/login";
-    }
-
-    @PostMapping("/login")
-    public String login(@ModelAttribute User user, Model model){
-        System.out.println("login request: " + user);
-        User authenticated = userService.authenticate(user.getName(), user.getPassword());
-        if(authenticated != null){
-            model.addAttribute("userName", authenticated.getName());
-            return "personal_page";
-        }else {
-            return "error_page";
-        }
-    }
-
-
-
     //Call API
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
     @GetMapping("")
-    List<User> getAllUserName(){return userRepository.findAll();}
+    List<User> getAllUserName(){return userService.findAll();}
 
     @GetMapping("/{id}")
     ResponseEntity<ResponseObject>findByUserId(@PathVariable Integer id){
-        Optional<User> foundUser = userRepository.findById(id);
+        Optional<User> foundUser = userService.findById(id);
         return foundUser.isPresent() ?
                 ResponseEntity.status(HttpStatus.OK).body(
                         new ResponseObject("ok","Querry product successfully", foundUser)
@@ -76,39 +38,39 @@ public class UserController {
 
     @PostMapping("/insert")
     ResponseEntity<ResponseObject> insertUser(@RequestBody User newUser){
-        Optional<User> foundUser = userRepository.findByEmail(newUser.getEmail().trim());
+        Optional<User> foundUser = userService.findByEmail(newUser.getEmail().trim());
         return foundUser.isPresent() ?
                 ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
                         new ResponseObject("failed", "Email already taken", "")
                 ):
                 ResponseEntity.status(HttpStatus.OK).body(
-                        new ResponseObject("Ok","Register User Name successfully",userRepository.save(newUser))
+                        new ResponseObject("Ok","Register User Name successfully",userService.save(newUser))
                 );
     }
 
     @PutMapping("/{id}")
     ResponseEntity<ResponseObject> updateUser (@RequestBody User newUser, @PathVariable Integer id){
-        User updateUser =  userRepository.findById(id)
+        User updateUser =  userService.findById(id)
                 .map(user -> {
                     user.setName(newUser.getName());
                     user.setEmail(newUser.getEmail());
                     user.setRole(newUser.getRole());
-                    return userRepository.save(user);
+                    return userService.save(user);
                 }).orElseGet(()->{
                     newUser.setId(id);
-                    return userRepository.save(newUser);
+                    return userService.save(newUser);
                 });
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("Ok","Update User successfully",userRepository.save(newUser))
+                new ResponseObject("Ok","Update User successfully",userService.save(newUser))
         );
     }
 
     @DeleteMapping("/{id}")
     ResponseEntity<ResponseObject> deleteUser (@PathVariable Integer id){
-        boolean exists = userRepository.existsById(id);
+        boolean exists = userService.existsById(id);
         if(exists)
         {
-            userRepository.deleteById(id);
+            userService.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("Ok", "Delete User successfully","")
             );

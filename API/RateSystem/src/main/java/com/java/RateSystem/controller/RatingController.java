@@ -47,13 +47,13 @@ public class RatingController {
         Optional<Rating> foundRate = ratingService.findByUUId(newRate.getId());
         if (foundRate.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                    new ResponseObject("failed", "Insert Rating successfully"," ")
+                    new ResponseObject("failed", "The Rating has existed"," ")
             );
         } else {
             ratingService.saveRating(newRate);
             ratingService.updateavg(newRate);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("Ok", "Insert Rating successfully","")
+                    new ResponseObject("Ok", "Insert Rating successfully",newRate)
             );
         }
     }

@@ -53,7 +53,6 @@ public class RatingService {
         OptionalDouble avg=  findRatingbyServiceID.stream().mapToDouble(i-> i.getPoint()).average();
         return avg;
     }
-
     public void updateavg(Rating newRating){
         Servicerate foundServices = serviceRepository.findByServiceId(newRating.getServiceid()).get();
         Double avg = calculate(newRating).orElse(0);

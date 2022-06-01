@@ -24,6 +24,15 @@ public class Rating {
     public Rating() {
     }
 
+    public Rating(UUID id, Integer serviceid, String username, Double point, String comment, java.util.Date date) {
+        this.id = id;
+        this.serviceid = serviceid;
+        this.username = username;
+        this.point = point;
+        this.comment = comment;
+        this.date = date;
+    }
+
     public Rating(Integer serviceid, String username, Double point, String comment, java.util.Date date) {
         this.serviceid = serviceid;
         this.username = username;

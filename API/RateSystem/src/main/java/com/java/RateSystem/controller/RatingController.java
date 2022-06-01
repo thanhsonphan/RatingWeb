@@ -38,24 +38,29 @@ public class RatingController {
                 ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                         new ResponseObject("false", "Cannot find Service with id =" + id,"")
                 );
-
     }
 
     //insert data
     @PostMapping("/insert")
-    ResponseEntity<ResponseObject> insertRating(@RequestBody Rating newRate){
-        Optional<Rating> foundRate = ratingService.findByUUId(newRate.getId());
-        if (foundRate.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                    new ResponseObject("failed", "The Rating has existed"," ")
-            );
-        } else {
-            ratingService.saveRating(newRate);
-            ratingService.updateavg(newRate);
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("Ok", "Insert Rating successfully",newRate)
-            );
-        }
+    public ResponseEntity<ResponseObject> insertRating(@RequestBody Rating newRate){
+        ratingService.saveRating(newRate);
+        ratingService.updateavg(newRate);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("Ok", "Insert Rating successfully",newRate)
+        );
+
+//            Optional<Rating> foundRate = ratingService.findByUUId(newRate.getId());
+//        if (foundRate.isPresent()) {
+//            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+//                    new ResponseObject("Failed", "The Rating can't be inserted"," ")
+//            );
+//        } else {
+//            ratingService.saveRating(newRate);
+//            ratingService.updateavg(newRate);
+//            return ResponseEntity.status(HttpStatus.OK).body(
+//                    new ResponseObject("Ok", "Insert Rating successfully",newRate)
+//            );
+//        }
     }
 
     //Update data
@@ -93,3 +98,4 @@ public class RatingController {
         );
     }
 }
+
